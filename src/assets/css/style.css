@@ -1,0 +1,171 @@
+.h-100vh{
+    height: 100vh;
+}
+.h-100{
+    height: 100%;
+}
+.w-40px{
+    width: 40px;
+}
+.sz-btn{
+    width: 33px !important;
+}
+.w-50px{
+    width: 50px;
+}
+.w-80{
+    width: 80%;
+}
+.fs-14{
+    font-size: 14px;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+.base-link-sidebar i{
+    width: 35px;
+}
+.search-input input{
+    border: 0px;
+    font-size: 14px;
+}
+.search-input input:focus{
+    outline: 0px;
+}
+.router-link-active{
+    background-color: #54545452 !important;
+}
+.pointer{
+    cursor: pointer;
+}
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #2e2e2e64;
+    border-radius: 10px;
+}
+.mw-fit-content{
+    max-width: fit-content;
+}
+
+/* ===== SIDEBAR START ===== */
+.navbar{
+    width: 220px;
+    /* min-height: 500px; */
+    height: 100vh;
+    position: fixed;
+    transition: 0.4s;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.navbar::-webkit-scrollbar{
+    width: 5px;
+}
+.navbar::-webkit-scrollbar-thumb{
+    background-color: #2e2e2e52;
+}
+.nav-link:active,
+.nav-link:focus,
+.nav-link:hover{
+    background-color: rgb(227, 83, 58);
+}
+.my-container{
+    transition: 0.4s;
+    margin-left: 220px;
+    overflow-x: auto;
+}
+.active-nav{
+    margin-left: -220px;
+}
+.active-count{
+    margin-left: 0px;
+}
+.none{
+    display: none;
+}
+
+@media (max-width: 750px) {
+    .navbar{
+        z-index: 2;
+        width: 250px;
+        margin-left: -250px;
+        /* margin-left: 0px; */
+        position: absolute;
+    }
+    .my-container{
+        z-index: 1;
+        margin-left: 0px;
+        position: absolute;
+    }
+    .active-nav{
+        margin-left: 0px;
+    }
+    .none{
+        display: block;
+    }
+}
+/* ===== SIDEBAR END ===== */
+
+/* ===== TOGGLE INPUT START ===== */
+.switch {
+    --button-width: 3.5em;
+    --button-height: 2em;
+    --toggle-diameter: 1.5em;
+    --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
+    --toggle-shadow-offset: 10px;
+    --toggle-wider: 3em;
+    --color-grey: #cccccc;
+    --color-green: #4296f4;
+   }
+   
+   .slider {
+    display: inline-block;
+    width: var(--button-width);
+    height: var(--button-height);
+    background-color: var(--color-grey);
+    border-radius: calc(var(--button-height) / 2);
+    position: relative;
+    transition: 0.3s all ease-in-out;
+   }
+   
+   .slider::after {
+    content: "";
+    display: inline-block;
+    width: var(--toggle-diameter);
+    height: var(--toggle-diameter);
+    background-color: #fff;
+    border-radius: calc(var(--toggle-diameter) / 2);
+    position: absolute;
+    top: var(--button-toggle-offset);
+    transform: translateX(var(--button-toggle-offset));
+    box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+    transition: 0.3s all ease-in-out;
+   }
+   
+   .switch input[type="checkbox"]:checked + .slider {
+    background-color: var(--color-green);
+   }
+   
+   .switch input[type="checkbox"]:checked + .slider::after {
+    transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
+    box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+   }
+   
+   .switch input[type="checkbox"] {
+    display: none;
+   }
+   
+   .switch input[type="checkbox"]:active + .slider::after {
+    width: var(--toggle-wider);
+   }
+   
+   .switch input[type="checkbox"]:checked:active + .slider::after {
+    transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+   }
+/* ===== TOGGLE INPUT END ===== */
