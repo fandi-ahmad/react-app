@@ -1,22 +1,10 @@
+import { Link } from "react-router-dom";
+
 function Navbar(props) {
     return(
-        <div>
-           <ul>
-                <li>
-                    <a href="">home</a>
-                </li>
-           </ul>
-           <ul>
-                <li>
-                    <a href="">{!props.navValue ? 'about' : props.navValue}</a>
-                </li>
-           </ul>
-           <ul>
-                <li>
-                    <a href="">{props.text}</a>
-                </li>
-           </ul>
-        </div>
+        <nav>
+            <Link to={"/"}>home</Link> | <Link to={"/login"}>login</Link>
+        </nav>
     )
 }
 
