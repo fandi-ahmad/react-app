@@ -1,5 +1,6 @@
 import { React, useState, useEffect} from 'react'
 import { useParams, Outlet, Link } from 'react-router-dom'
+import Navbar from '../components/Navbar'
 
 const Detail = () => {
     const { id } = useParams()
@@ -17,6 +18,7 @@ const Detail = () => {
 
     return (
         <div>
+           <Navbar />
             <h2>detail page</h2>
             <p>detai id: {id}</p>
             <pre>{JSON.stringify(user, null, 4)}</pre>
