@@ -1,16 +1,17 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useRef } from 'react'
 import BaseButton from '../../components/input/BaseButton'
 import Sidebar from '../../components/Sidebar'
-import axios from 'axios'
-// import { Axios } from 'axios'
 import MenuBtn from '../../function/MenuBtn'
-import { apiGetList, apiUpsert } from '../../api/ApiGate'
+import Resize from '../../function/Resize'
+import { apiGetList, apiUpsert, apiDelete } from '../../api/ApiGate'
 import { Button, Modal, InputGroup, Form } from 'react-bootstrap'
 import BaseToggle from '../../components/input/BaseToggle'
+import { AlertSuccess, AlertError, AlertConfirm } from '../../assets/sweetAlert'
 
 const Gate = () => {
     const [gateLists, setGateList] = useState([])
 
+    const [id, setId] = useState()
     const [name, setName] = useState('');
     const [cameraNumber, setCameraNumber] = useState('');
     const [status, setStatus] = useState('online');
@@ -25,6 +26,10 @@ const Gate = () => {
     const [total, setTotal] = useState(1);
     const [pageOf, setPageOf] = useState();
 
+    // const createNewBtn = useRef(null)
+    const createBtn = useRef(null)
+    const updateBtn = useRef(null)
+
     // show all data in table
     const getAllData = () => {
         apiGetList(limit, page)
@@ -34,12 +39,6 @@ const Gate = () => {
             setTotal(data.meta.total)
             setPageOf(Math.ceil(total / limit));
         });
-    }
-
-    const cekPage = () => {
-        console.log(total)
-        console.log(limit)
-        console.log(pageOf)
     }
 
     // next btn
@@ -74,16 +73,16 @@ const Gate = () => {
         }
     }
 
+    const showCreateForm = () => {
+        handleShowModal()
+        setTimeout(() => {
+            createBtn.current.className = 'btn btn-primary d-block'
+            updateBtn.current.className = 'd-none'
+        }, 0);
+    }
+
     // create data
-    const handleSubmit = () => {
-        console.log({
-            name: name,
-            camera_number: cameraNumber,
-            Status: status,
-            is_active: isActive,
-            network_ip: networkIp,
-            uid: uid,
-        })
+    const upsertData = () => {
         apiUpsert({
             name: name,
             camera_number: cameraNumber,
@@ -93,17 +92,21 @@ const Gate = () => {
             uid: uid,
         })
         .then(response => {
-            console.log(response.data);
             getAllData()
             handleCloseModal()
             resetData()
+            AlertSuccess('data has been created')
         }).catch(error => {
-            console.log(error);
+            handleCloseModal()
+            setTimeout(() => {
+                AlertError('Ups, something wrong!')
+            }, 100);
         });
     }
 
     // reset data in form
     const resetData = () => {
+        setId()
         setName('')
         setCameraNumber('')
         setStatus('online')
@@ -123,8 +126,59 @@ const Gate = () => {
         resetData()
     }
 
+    // delete data
     const deleteData = (id) => {
-        console.log(id)
+        AlertConfirm({
+            title: 'Delete?',
+            confirmText: 'Yes, Delete It',
+            preConfirm: () => {
+                apiDelete(id)
+                .then((result) => {
+                    AlertSuccess('data has been deleted')
+                    getAllData()
+                }).catch((err) => {
+                    AlertError('Ups, something wrong!')
+                });
+            }
+        })
+    }
+
+    const showUpdateForm = (gateList) => {
+        handleShowModal()
+        setId(gateList.id)
+        setName(gateList.name)
+        setCameraNumber(gateList.camera_number)
+        setStatus(gateList.status)
+        setIsActive(gateList.is_active)
+        setNetworkIp(gateList.network_ip)
+        setUid(gateList.uid)
+        setTimeout(() => {
+            createBtn.current.className = 'd-none'
+            updateBtn.current.className = 'btn btn-primary d-block'
+        }, 0);
+    }
+
+    const updateData = () => {
+        apiUpsert({
+            id: id,
+            name: name,
+            camera_number: cameraNumber,
+            Status: status,
+            is_active: isActive,
+            network_ip: networkIp,
+            uid: uid,
+        })
+        .then(response => {
+            getAllData()
+            handleCloseModal()
+            resetData()
+            AlertSuccess('data has been updated')
+        }).catch(error => {
+            handleCloseModal()
+            setTimeout(() => {
+                AlertError('Ups, something wrong')
+            }, 100);
+        });
     }
    
 
@@ -179,7 +233,8 @@ const Gate = () => {
 
                         <div className='d-flex justify-content-end gap-3 mt-5'>
                             <Button variant="secondary" onClick={handleCloseModal}>Close</Button>
-                            <Button variant="primary" onClick={handleSubmit}>Save</Button>
+                            <Button className='btn-primary' ref={createBtn} onClick={upsertData}>Create</Button>
+                            <Button className='btn-primary' ref={updateBtn} onClick={updateData}>Update</Button>
                         </div>
                     </Modal.Body>
                 </Modal>
@@ -187,10 +242,9 @@ const Gate = () => {
                 <div className='container-fluid h-100 p-0'>
                     <div className="d-flex justify-content-between align-items-center mb-4 mt-2">
                         <h2>Gate</h2>
-                        <Button variant="primary" onClick={handleShowModal}>Create New</Button>
+                        <Button variant="primary" onClick={showCreateForm}>Create New</Button>
                     </div>
 
-                    <button onClick={cekPage}>cek page</button>
                     <table className="table">
                         <thead>
                             <tr>
@@ -212,8 +266,7 @@ const Gate = () => {
                                 const isActiveString = isActive.toString();
                                 return (
                                     <tr key={gateList.id}>
-                                        {/* <td>{index + 1}</td> */}
-                                        <td>{gateList.id}</td>
+                                        <td>{index + 1}</td>
                                         <td>{gateList.name}</td>
                                         <td>{gateList.status}</td>
                                         <td className='text-center'>{gateList.camera_number}</td>
@@ -227,9 +280,12 @@ const Gate = () => {
                                             <small>{gateList.updated_at}</small>
                                         </td>
                                         <td>
-                                            <BaseButton className='btn-sm btn-primary mt-1 ms-1' name={<i className="fa-solid fa-pen"></i>} />
-                                            <BaseButton onClick={() => deleteData(gateList.id)} className='btn-sm btn-danger mt-1 ms-1' name={<i className="fa-sharp fa-solid fa-trash"></i>} />
-                                            <Button className='btn-sm' onClick={() => deleteData(gateList.id)}>cek</Button>
+                                            <Button className='btn-sm btn-primary mt-1 ms-1' onClick={() => showUpdateForm(gateList)}>
+                                                <i className="fa-solid fa-pen"></i>
+                                            </Button>
+                                            <Button className='btn-sm btn-danger mt-1 ms-1' onClick={() => deleteData(gateList.id)}>
+                                                <i className="fa-sharp fa-solid fa-trash"></i>
+                                            </Button>
                                         </td>
                                     </tr>
                                 )
@@ -247,9 +303,9 @@ const Gate = () => {
                     </div>
                 </div>
 
-
             </section>
             <MenuBtn />
+            <Resize />
         </div>
     )
 }

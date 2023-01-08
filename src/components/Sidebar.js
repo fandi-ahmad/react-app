@@ -1,7 +1,17 @@
-import React from 'react'
+import { React, useEffect }from 'react'
 import { Link } from 'react-router-dom'
 
 const Sidebar = (props) => {
+
+    useEffect(() => {
+        const sideBarId = document.getElementById('sidebar')
+        const closeMenuId = document.getElementById('closeMenu')
+
+        closeMenuId.addEventListener('click', function() {
+            sideBarId.classList.toggle('active-nav')
+        })
+    }, [])
+
     return (
         <div>
             <nav id='sidebar' className="navbar navbar-expand d-flex flex-column align-item-start bg-primary py-4">
