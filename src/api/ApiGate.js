@@ -23,4 +23,10 @@ export const apiUpsert = (data) => {
     });
 }
 
-
+export const apiDelete = (id) => {
+    return axios.delete(`${apiUrl}/${id}`)
+    .then(response => response.data)
+    .catch(error => {
+        throw error;
+    });
+}
