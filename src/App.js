@@ -9,6 +9,7 @@ import Status from "./pages/Status";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Gate from "./pages/setting/Gate";
 import Event from "./pages/setting/Event";
+import EventGate from "./pages/setting/EventGate";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<Status/>} />
                 <Route path="/gate" element={<Gate/>} />
                 <Route path="/event" element={<Event/>} />
+                <Route path="/setup-event-gate" element={<EventGate/>} />
             </Routes>
         </BrowserRouter>
 

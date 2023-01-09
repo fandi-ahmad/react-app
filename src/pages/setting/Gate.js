@@ -3,7 +3,7 @@ import BaseButton from '../../components/input/BaseButton'
 import Sidebar from '../../components/Sidebar'
 import MenuBtn from '../../function/MenuBtn'
 import Resize from '../../function/Resize'
-import { apiGetList, apiUpsert, apiDelete } from '../../api/ApiGate'
+import { GetGate, UpsertGate, DeleteGate } from '../../api/ApiGate'
 import { Button, Modal, InputGroup, Form } from 'react-bootstrap'
 import BaseToggle from '../../components/input/BaseToggle'
 import { AlertSuccess, AlertError, AlertConfirm } from '../../assets/sweetAlert'
@@ -32,7 +32,7 @@ const Gate = () => {
 
     // show all data in table
     const getAllData = () => {
-        apiGetList(limit, page)
+        GetGate(limit, page)
         .then(data => {
             setGateList(data.data)
 
@@ -83,7 +83,7 @@ const Gate = () => {
 
     // create data
     const upsertData = () => {
-        apiUpsert({
+        UpsertGate({
             name: name,
             camera_number: cameraNumber,
             Status: status,
@@ -132,7 +132,7 @@ const Gate = () => {
             title: 'Delete?',
             confirmText: 'Yes, Delete It',
             preConfirm: () => {
-                apiDelete(id)
+                DeleteGate(id)
                 .then((result) => {
                     AlertSuccess('data has been deleted')
                     getAllData()
@@ -159,7 +159,7 @@ const Gate = () => {
     }
 
     const updateData = () => {
-        apiUpsert({
+        UpsertGate({
             id: id,
             name: name,
             camera_number: cameraNumber,

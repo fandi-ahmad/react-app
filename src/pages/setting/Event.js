@@ -4,7 +4,7 @@ import MenuBtn from '../../function/MenuBtn'
 import Resize from '../../function/Resize'
 import { Button, Modal, Form } from 'react-bootstrap'
 import BaseButton from '../../components/input/BaseButton'
-import { apiGetList } from '../../api/ApiEvent'
+import { GetEvent } from '../../api/ApiEvent'
 
 const Event = () => {
     const [eventLists, setEventLists] = useState([])
@@ -25,7 +25,7 @@ const Event = () => {
 
     // get all data in table
     const getAllData = () => {
-        apiGetList(limit, page, '')
+        GetEvent(limit, page, '')
         .then(data => {
             setEventLists(data.data)
             setTotal(data.meta.total)
