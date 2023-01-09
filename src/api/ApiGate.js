@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiUrl = 'http://localhost:8081/ex/v1/gate';
 
-export const apiGetList = (limit, page) => {
+export const GetGate = (limit, page) => {
     return axios.get(`${apiUrl}`, {
         params: {
             limit: limit,
@@ -15,7 +15,7 @@ export const apiGetList = (limit, page) => {
     });
 }
 
-export const apiUpsert = (data) => {
+export const UpsertGate = (data) => {
     return axios.post(`${apiUrl}`, data)
     .then(response => response.data)
     .catch(error => {
@@ -23,7 +23,7 @@ export const apiUpsert = (data) => {
     });
 }
 
-export const apiDelete = (id) => {
+export const DeleteGate = (id) => {
     return axios.delete(`${apiUrl}/${id}`)
     .then(response => response.data)
     .catch(error => {
