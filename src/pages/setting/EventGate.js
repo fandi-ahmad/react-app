@@ -8,6 +8,7 @@ import { GetEventGate, UpsertEventGate } from '../../api/ApiEventGate'
 import { GetGate } from '../../api/ApiGate'
 import { GetEvent } from '../../api/ApiEvent'
 import BaseToggle from '../../components/input/BaseToggle'
+import { AlertSuccess, AlertError } from '../../assets/sweetAlert'
 
 const EventGate = () => {
     const [eventGateLists, setEventGateList] = useState([])
@@ -117,6 +118,31 @@ const EventGate = () => {
         }
     }
 
+    // create event gate    (maintenance)
+    const createData = () => {
+        UpsertEventGate({
+            event_id: eventId,
+            gate_id: gateId,
+            is_active: isActive,
+            direction: direction,
+            gate_open_time: openTime,
+            gate_close_time: closeTime
+        })
+        .then(response => {
+            getAllData()
+            handleCloseModal()
+            resetData()
+            AlertSuccess('data has been created')
+            console.log(response)
+        }).catch(error => {
+            handleCloseModal()
+            console.log(error)
+            setTimeout(() => {
+                AlertError('Ups, something wrong!')
+            }, 100);
+        });
+    }
+
     useEffect(() => {
         getAllData()
     }, [page, pageOf])
@@ -177,7 +203,7 @@ const EventGate = () => {
                         </div>
                         <div className='d-flex justify-content-end gap-3 mt-5'>
                             <Button variant="secondary" onClick={handleCloseModal} >Close</Button>
-                            <Button className='btn-primary' onClick={cek}>Create</Button>
+                            <Button className='btn-primary' onClick={createData}>Create</Button>
                         </div>
                     </Modal.Body>
                 </Modal>
