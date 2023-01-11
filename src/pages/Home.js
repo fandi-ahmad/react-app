@@ -20,7 +20,6 @@ const Home = () => {
         navigate(`/detail/${id}`)
     }
 
-    console.log(users)
 
     return (
         <div>
