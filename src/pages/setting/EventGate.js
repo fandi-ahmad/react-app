@@ -87,15 +87,6 @@ const EventGate = () => {
             setGateLists(data.data)
         });
     }
-    
-    const cek = () => {
-        console.log(eventId)
-        console.log(gateId)
-        console.log(isActive)
-        console.log(direction)
-        console.log(openTime)
-        console.log(closeTime)
-    }
 
     // handle every change in form input
     const handleChange = (event) => {
