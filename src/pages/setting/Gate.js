@@ -152,6 +152,7 @@ const Gate = () => {
         }, 0);
     }
 
+    // update
     const updateData = () => {
         UpsertGate({
             id: id,
@@ -172,7 +173,53 @@ const Gate = () => {
             }, 100);
         });
     }
+
+    // display timezone
+    const displayTimeZone = (timezone) => {
+        if (timezone == 'Asia/Jakarta') {
+            return 'Jakarta'
+        } else if (timezone == 'Asia/Makassar') {
+            return 'Makassar'
+        } else if (timezone == 'Asia/Jayapura') {
+            return 'Jayapura'
+        } else {
+            return 'indefined'
+        }
+    }
    
+    // display in op_mode
+    const displayOpMode = (op_mode) => {
+        if (op_mode == '0') {
+            return 'disable'
+        } else if (op_mode == '1') {
+            return 'in'
+        } else if (op_mode == '2') {
+            return 'out'
+        } else if (op_mode == '3') {
+            return 'in/out'
+        } else if (op_mode == '4') {
+            return 'drop'
+        } else {
+            return 'undefined'
+        }
+    }
+
+    // display class in op_mode
+    const classOpMode = (op_mode) => {
+        if (op_mode == '0') {
+            return 'bg-secondary'
+        } else if (op_mode == '1') {
+            return 'bg-success'
+        } else if (op_mode == '2') {
+            return 'bg-danger'
+        } else if (op_mode == '3') {
+            return 'bg-warning text-dark'
+        } else if (op_mode == '4') {
+            return 'bg-info text-dark'
+        } else {
+            return 'undefined'
+        }
+    }
 
     // run in first load
     useEffect(() => {
@@ -233,10 +280,10 @@ const Gate = () => {
                         <thead>
                             <tr>
                                 <th scope='col' style={{width: '40px'}}>No</th>
-                                <th scope="col" style={{width: '200px'}}>Name</th>
+                                <th scope="col" style={{minWidth: '200px'}}>Name</th>
+                                <th scope="col">Timezone</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Network Ip</th>
-                                <th scope="col">Uid</th>
+                                <th scope="col">Network</th>
                                 <th scope="col">Created</th>
                                 <th scope="col">Update</th>
                                 <th scope="col">Action</th>
@@ -248,9 +295,54 @@ const Gate = () => {
                                     <tr key={gateList.id}>
                                         <td>{index + 1}</td>
                                         <td>{gateList.name}</td>
-                                        <td>{gateList.status}</td>
-                                        <td>{gateList.network_ip}</td>
-                                        <td>{gateList.uid}</td>
+                                        <td>{displayTimeZone(gateList.timezone)}</td>
+                                        <td>
+                                            <div className='d-flex flex-row'>
+                                                <div style={{minWidth: '120px'}}>
+                                                    <b>Uid</b>
+                                                    <div>{gateList.uid}</div>
+                                                </div>
+                                                <div>
+                                                    <b>Status</b>
+                                                    <div>{gateList.status}</div>
+                                                </div>
+                                            </div>
+                                            <div className='d-flex flex-row'>
+                                                <div style={{minWidth: '120px'}}>
+                                                    <b>Heartbeat</b>
+                                                    <div>{gateList.heartbeat_interval}</div>
+                                                </div>
+                                                <div>
+                                                    <b>Op Mode</b>
+                                                    <div>
+                                                        <span className={`badge ${classOpMode(gateList.op_mode)}`} style={{minWidth: '60px'}}>{displayOpMode(gateList.op_mode)}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className='d-flex flex-row'>
+                                                <div style={{minWidth: '130px'}}>
+                                                    <b>Network Ip</b>
+                                                    <div>{gateList.network_ip}</div>
+                                                </div>
+                                                <div>
+                                                    <b>Device Gateway</b>
+                                                    <div>{gateList.device_gw}</div>
+                                                </div>
+                                            </div>
+                                            <div className='d-flex flex-row'>
+                                                <div style={{minWidth: '130px'}}>
+                                                    <b>Device DNS</b>
+                                                    <div>{gateList.device_dns}</div>
+                                                </div>
+                                                <div>
+                                                    <b>Subnet Mask</b>
+                                                    <div>{gateList.device_sn}</div>
+                                                </div>
+                                            </div>
+                                            
+                                        </td>
                                         <td>
                                             <small>{gateList.created_at}</small>
                                         </td>
