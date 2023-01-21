@@ -4,8 +4,7 @@ import Sidebar from '../../components/Sidebar'
 import MenuBtn from '../../function/MenuBtn'
 import Resize from '../../function/Resize'
 import { GetGate, UpsertGate, DeleteGate } from '../../api/ApiGate'
-import { Button, Modal, InputGroup, Form } from 'react-bootstrap'
-import BaseToggle from '../../components/input/BaseToggle'
+import { Button, Modal, Form } from 'react-bootstrap'
 import { AlertSuccess, AlertError, AlertConfirm } from '../../assets/sweetAlert'
 
 const Gate = () => {
@@ -327,7 +326,7 @@ const Gate = () => {
                                                     <div>{gateList.network_ip}</div>
                                                 </div>
                                                 <div>
-                                                    <b>Device Gateway</b>
+                                                    <b>Gateway</b>
                                                     <div>{gateList.device_gw}</div>
                                                 </div>
                                             </div>
