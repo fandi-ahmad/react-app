@@ -13,11 +13,15 @@ const Gate = () => {
 
     const [id, setId] = useState()
     const [name, setName] = useState('');
-    const [cameraNumber, setCameraNumber] = useState('');
     const [status, setStatus] = useState('online');
-    const [isActive, setIsActive] = useState(false);
     const [networkIp, setNetworkIp] = useState('');
     const [uid, setUid] = useState('');
+    const [timezone, setTimezone] = useState('')
+    const [deviceGw, setDeviceGw] = useState('')
+    const [deviceDns, setDeviceDns] = useState('')
+    const [deviceSn, setDeviceSn] = useState('')
+    const [heartbeat, setHeartbeat] = useState('')
+    const [opMode, setOpMode] = useState('')
 
     const [showModal, setShowModal] = useState(false);
 
@@ -60,12 +64,8 @@ const Gate = () => {
 
         if (name === 'name') {
             setName(value);
-        } else if (name === 'cameraNumber') {
-            setCameraNumber(parseInt(value, 10));
         } else if (name === 'status') {
             setStatus(value);
-        } else if (name === 'isActive') {
-            setIsActive(value);
         } else if (name === 'networkIp') {
             setNetworkIp(value);
         } else if (name === 'uid') {
@@ -85,9 +85,7 @@ const Gate = () => {
     const upsertData = () => {
         UpsertGate({
             name: name,
-            camera_number: cameraNumber,
             Status: status,
-            is_active: isActive,
             network_ip: networkIp,
             uid: uid,
         })
@@ -108,9 +106,7 @@ const Gate = () => {
     const resetData = () => {
         setId()
         setName('')
-        setCameraNumber('')
         setStatus('online')
-        setIsActive(false)
         setUid('')
         setNetworkIp('')
     }
@@ -147,9 +143,7 @@ const Gate = () => {
         handleShowModal()
         setId(gateList.id)
         setName(gateList.name)
-        setCameraNumber(gateList.camera_number)
         setStatus(gateList.status)
-        setIsActive(gateList.is_active)
         setNetworkIp(gateList.network_ip)
         setUid(gateList.uid)
         setTimeout(() => {
@@ -162,9 +156,7 @@ const Gate = () => {
         UpsertGate({
             id: id,
             name: name,
-            camera_number: cameraNumber,
             Status: status,
-            is_active: isActive,
             network_ip: networkIp,
             uid: uid,
         })
@@ -214,16 +206,8 @@ const Gate = () => {
                                 </Form.Select>
                             </div>
                             <div>
-                                <label>Camera Number</label>
-                                <Form.Control placeholder="" name="cameraNumber" value={cameraNumber} onChange={handleChange} />
-                            </div>
-                            <div>
                                 <label>Uid</label>
                                 <Form.Control placeholder="" name="uid" value={uid} onChange={handleChange} />
-                            </div>
-                            <div>
-                                <label>Is Active</label>
-                                <BaseToggle slot={<input type="checkbox" name="isActive" checked={isActive} onChange={handleChange} />} />
                             </div>
                         </div>
                         <div>
@@ -251,7 +235,6 @@ const Gate = () => {
                                 <th scope='col' style={{width: '40px'}}>No</th>
                                 <th scope="col" style={{width: '200px'}}>Name</th>
                                 <th scope="col">Status</th>
-                                {/* <th scope="col">Active</th> */}
                                 <th scope="col">Network Ip</th>
                                 <th scope="col">Uid</th>
                                 <th scope="col">Created</th>
@@ -261,14 +244,11 @@ const Gate = () => {
                         </thead>
                         <tbody>
                             {gateLists.map((gateList, index) => {
-                                // const isActive = gateList.is_active
-                                // const isActiveString = isActive.toString();
                                 return (
                                     <tr key={gateList.id}>
                                         <td>{index + 1}</td>
                                         <td>{gateList.name}</td>
                                         <td>{gateList.status}</td>
-                                        {/* <td>{isActiveString}</td> */}
                                         <td>{gateList.network_ip}</td>
                                         <td>{gateList.uid}</td>
                                         <td>
