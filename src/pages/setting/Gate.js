@@ -32,7 +32,7 @@ const Gate = () => {
 
     // show all data in table
     const getAllData = () => {
-        GetGate(limit, page)
+        GetGate(limit, page, '', '', '')
         .then(data => {
             setGateList(data.data)
 
@@ -251,8 +251,7 @@ const Gate = () => {
                                 <th scope='col' style={{width: '40px'}}>No</th>
                                 <th scope="col" style={{width: '200px'}}>Name</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Camera Number</th>
-                                <th scope="col">Active</th>
+                                {/* <th scope="col">Active</th> */}
                                 <th scope="col">Network Ip</th>
                                 <th scope="col">Uid</th>
                                 <th scope="col">Created</th>
@@ -262,15 +261,14 @@ const Gate = () => {
                         </thead>
                         <tbody>
                             {gateLists.map((gateList, index) => {
-                                const isActive = gateList.is_active
-                                const isActiveString = isActive.toString();
+                                // const isActive = gateList.is_active
+                                // const isActiveString = isActive.toString();
                                 return (
                                     <tr key={gateList.id}>
                                         <td>{index + 1}</td>
                                         <td>{gateList.name}</td>
                                         <td>{gateList.status}</td>
-                                        <td className='text-center'>{gateList.camera_number}</td>
-                                        <td>{isActiveString}</td>
+                                        {/* <td>{isActiveString}</td> */}
                                         <td>{gateList.network_ip}</td>
                                         <td>{gateList.uid}</td>
                                         <td>
